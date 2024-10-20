@@ -1,6 +1,6 @@
-require('dotenv').config();
 const express = require('express');
 const axios = require('axios');
+require('dotenv').config(); // بارگذاری متغیرهای محیطی
 
 const app = express();
 const PORT = process.env.PORT || 9000;
@@ -18,7 +18,7 @@ app.get('/', async (req, res) => {
             messages: [{ role: 'user', content: userMessage }],
         }, {
             headers: {
-                'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`, 
+                'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`,
                 'Content-Type': 'application/json',
             },
         });
@@ -26,7 +26,7 @@ app.get('/', async (req, res) => {
         const botMessage = response.data.choices[0].message.content;
         res.json({ message: botMessage });
     } catch (error) {
-        console.error('Error calling OpenAI API:', error);
+        console.error('Error calling OpenAI API:', error); 
         res.status(500).json({ error: 'Error communicating with ChatGPT' });
     }
 });
